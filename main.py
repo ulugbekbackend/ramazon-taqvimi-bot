@@ -7,6 +7,7 @@ from kun import kun_bugun
 
 from datetime import datetime,timedelta
 
+
 TOKEN='5265017422:AAFVy7An3OvUR_UCx5dAjkrbVt8ErOwGLDI'
 DB_NAME='ramazon.sqlite'
 
@@ -15,7 +16,7 @@ DB_NAME='ramazon.sqlite'
 BTN_TODAY='⌛️ Bugun'
 BTN_TOMORROW='⏳ Ertaga'
 BTN_MONTH="📅 To'liq taqvim"
-BTN_REGION='🇺🇿 Mintaqa'
+BTN_REGION='🇺🇿 Mintaqani o\'zgartirish'
 BTN_DUA='🤲 Duo'
 
 main_buttons=ReplyKeyboardMarkup([
@@ -67,15 +68,15 @@ def calendar_today(update,context):
     region=db.get_region(region_id)
     
     today=str(datetime.now().date())
-    print(today)
+    # print(today)
     # print(kun_bugun())
     # vaqt=kun_bugun()
     # print(vaqt)
     if today=='2022-03-28' or today=='2022-03-29' or today=='2022-03-30' or today=='2022-03-31' or today=='2022-04-01':
-        print('false')
+        # print('false')
         update.message.reply_html("<b>Ramazon</b> oyi <b>2-aprel</b>dan boshlanadi.\n \nRamazon oyi boshlangunga qadar bu <b>Telegram bot</b>ni do\'stlaringizga jo\'natib qo\'yishingizni so\'rab qolaman.\n \nRamazon oyi 2-apreldan boshlanadi, shu bilan birga 1-aprel kunidan boshlab ⏳ <b>Ertaga</b> va 📅 <b>To\'liq taqvim</b> bo\'limlari ishlashni boshlaydi")
     else:
-        print('true')
+        # print('true')
         
         calendar=db.get_calendar_by_region(region_id,today)
         photo_path='images/img/{}.png'.format(calendar['id'])
@@ -90,12 +91,13 @@ def calendar_tomorrow(update,context):
     region_id=user_region[user_id]
     region=db.get_region(region_id)
     
+    today1=str(datetime.now().date())
     today=str(datetime.now().date()+timedelta(days=1))
-    if today=='2022-03-28' or today=='2022-03-29' or today=='2022-03-30' or today=='2022-03-31' or today=='2022-04-01':
-        print('false')
+    if today1=='2022-03-28' or today1=='2022-03-29' or today1=='2022-03-30' or today1=='2022-03-31':
+        # print('false')
         update.message.reply_html("<b>Ramazon</b> oyi <b>2-aprel</b>dan boshlanadi.\n \nRamazon oyi boshlangunga qadar bu <b>Telegram bot</b>ni do\'stlaringizga jo\'natib qo\'yishingizni so\'rab qolaman.\n \nRamazon oyi 2-apreldan boshlanadi, shu bilan birga 1-aprel kunidan boshlab ⏳ <b>Ertaga</b> va 📅 <b>To\'liq taqvim</b> bo\'limlari ishlashni boshlaydi")
     else:
-        print('true')
+        # print('true')
         calendar=db.get_calendar_by_region(region_id,today)
         photo_path='images/img/{}.png'.format(calendar['id'])
         xabar="<b>Ramazon 2022</b> \n \n<b>{}</b> vaqti\n \nSana: <b>{} {}</b>\n \nSaharlik: <b>{}</b>\nIftorlik: <b>{}</b>".format(region['name'], calendar['sana'], calendar['hafta_kuni'], calendar['saharlik'],calendar['iftorlik']  )
@@ -112,10 +114,10 @@ def calendar_month(update,context):
     today=str(datetime.now().date())
     calendar=db.get_calendar_by_region(region_id,today)
     if today=='2022-03-28' or today=='2022-03-29' or today=='2022-03-30' or today=='2022-03-31':
-        print('false')
+        # print('false')
         update.message.reply_html("<b>Ramazon</b> oyi <b>2-aprel</b>dan boshlanadi.\n \nRamazon oyi boshlangunga qadar bu <b>Telegram bot</b>ni do\'stlaringizga jo\'natib qo\'yishingizni so\'rab qolaman.\n \nRamazon oyi 2-apreldan boshlanadi, shu bilan birga 1-aprel kunidan boshlab ⏳ <b>Ertaga</b>  va 📅 <b>To\'liq taqvim</b> bo\'limlari ishlashni boshlaydi")
     else:
-        print('true')
+        # print('true')
         photo_path='images/taqvim_oylik/{}.png'.format(region['id'])
         xabar="<b>Ramazon 2022</b> \n \n<b>{}</b> vaqti".format(region['name'])
         update.message.reply_photo( photo=open(photo_path, 'rb'),caption=xabar, parse_mode='HTML',reply_markup=main_buttons)
