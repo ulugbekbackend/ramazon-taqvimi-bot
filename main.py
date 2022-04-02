@@ -7,6 +7,7 @@ from kun import kun_bugun
 
 from datetime import datetime,timedelta
 
+import pytz
 
 TOKEN='5265017422:AAFVy7An3OvUR_UCx5dAjkrbVt8ErOwGLDI'
 DB_NAME='ramazon.sqlite'
@@ -67,7 +68,8 @@ def calendar_today(update,context):
     region_id=user_region[user_id]
     region=db.get_region(region_id)
     
-    today=str(datetime.now().date())
+    time_zone = pytz.timezone('Asia/Tashkent')
+    today=str(datetime.now(time_zone))[:10]
     # print(today)
     # print(kun_bugun())
     # vaqt=kun_bugun()
@@ -91,8 +93,11 @@ def calendar_tomorrow(update,context):
     region_id=user_region[user_id]
     region=db.get_region(region_id)
     
-    today1=str(datetime.now().date())
-    today=str(datetime.now().date()+timedelta(days=1))
+    time_zone = pytz.timezone('Asia/Tashkent')
+    today1=str(datetime.now(time_zone))[:10]
+    today2=str(datetime.now(time_zone)+timedelta(days=1))
+    print(today2)
+    today=str(datetime.now(time_zone)+timedelta(days=1))[:10]
     if today1=='2022-03-28' or today1=='2022-03-29' or today1=='2022-03-30' or today1=='2022-03-31':
         # print('false')
         update.message.reply_html("<b>Ramazon</b> oyi <b>2-aprel</b>dan boshlanadi.\n \nRamazon oyi boshlangunga qadar bu <b>Telegram bot</b>ni do\'stlaringizga jo\'natib qo\'yishingizni so\'rab qolaman.\n \nRamazon oyi 2-apreldan boshlanadi, shu bilan birga 1-aprel kunidan boshlab ⏳ <b>Ertaga</b> va 📅 <b>To\'liq taqvim</b> bo\'limlari ishlashni boshlaydi")
@@ -111,7 +116,8 @@ def calendar_month(update,context):
     region_id=user_region[user_id]
     region=db.get_region(region_id)
     
-    today=str(datetime.now().date())
+    time_zone = pytz.timezone('Asia/Tashkent')
+    today=str(datetime.now(time_zone))[:10]
     calendar=db.get_calendar_by_region(region_id,today)
     if today=='2022-03-28' or today=='2022-03-29' or today=='2022-03-30' or today=='2022-03-31':
         # print('false')
