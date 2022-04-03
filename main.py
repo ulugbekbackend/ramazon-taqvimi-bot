@@ -19,9 +19,11 @@ BTN_TOMORROW='⏳ Ertaga'
 BTN_MONTH="📅 To'liq taqvim"
 BTN_REGION='🇺🇿 Mintaqani o\'zgartirish'
 BTN_DUA='🤲 Duo'
+RESTART1="Muommo yuzaga kelganda ➡️ /start ⬅️ bo\'limini bosing."
+RESTART='/start'
 
 main_buttons=ReplyKeyboardMarkup([
-    [BTN_TODAY],[BTN_TOMORROW,BTN_MONTH],[BTN_REGION],[BTN_DUA]
+    [RESTART],[BTN_TODAY],[BTN_TOMORROW,BTN_MONTH],[BTN_REGION],[BTN_DUA],[RESTART1],[RESTART]
 ], resize_keyboard=True)
 
 STATE_REGION=1
@@ -60,6 +62,31 @@ def inline_callback(update,context):
     
     query.message.reply_html(text="<b>Ramazon taqvimi</b> 2️⃣0️⃣2️⃣2️⃣\n \n<b>{} vaqti bo'yicha</b> \n \nQuyidagilardan birini tanlang 👇".format(region['name']),reply_markup=main_buttons)
     return STATE_CALENDAR
+
+def restart1():
+    pass
+
+# def restart(update, context):
+#     user=update.message.from_user
+#     user_region[user.id]=None
+#     buttons=regions_buttons()
+    
+#     update.message.reply_html("Assalomu alaykum <b>{} {}!</b>\n \n<b>Ramazon oyi muborak bo'lsin</b>".format(user.first_name, user.last_name))
+#     update.message.reply_html("Sizga qaysi mintaqa bo'yicha ma'lumot berayin.", reply_markup=InlineKeyboardMarkup(buttons))
+#     return STATE_REGION
+
+# def inline_callback(update,context):
+#     query=update.callback_query
+#     user_id=query.from_user.id
+#     user_region[user_id]=int(query.data)
+#     query.message.delete()
+    
+#     region_id=user_region[user_id]
+#     region=db.get_region(region_id)
+    
+#     query.message.reply_html(text="<b>Ramazon taqvimi</b> 2️⃣0️⃣2️⃣2️⃣\n \n<b>{} vaqti bo'yicha</b> \n \nQuyidagilardan birini tanlang 👇".format(region['name']),reply_markup=main_buttons)
+#     return STATE_CALENDAR
+
 
 def calendar_today(update,context):
     user_id=update.message.from_user.id
@@ -154,18 +181,22 @@ def main():
         states={
             STATE_REGION:[
                 CallbackQueryHandler(inline_callback),
+                # MessageHandler(Filters.regex('^('+RESTART+')$'),start),
                 MessageHandler(Filters.regex('^('+BTN_TODAY+')$'),calendar_today),
                 MessageHandler(Filters.regex('^('+BTN_TOMORROW+')$'),calendar_tomorrow),
                 MessageHandler(Filters.regex('^('+BTN_MONTH+')$'),calendar_month),
                 MessageHandler(Filters.regex('^('+BTN_REGION+')$'),select_region),
                 MessageHandler(Filters.regex('^('+BTN_DUA+')$'),select_dua)
+                
                 ],
             STATE_CALENDAR:[
+                # MessageHandler(Filters.regex('^('+RESTART+')$'),start),
                 MessageHandler(Filters.regex('^('+BTN_TODAY+')$'),calendar_today),
                 MessageHandler(Filters.regex('^('+BTN_TOMORROW+')$'),calendar_tomorrow),
                 MessageHandler(Filters.regex('^('+BTN_MONTH+')$'),calendar_month),
                 MessageHandler(Filters.regex('^('+BTN_REGION+')$'),select_region),
                 MessageHandler(Filters.regex('^('+BTN_DUA+')$'),select_dua)
+                
             ],
         },
         fallbacks=[CommandHandler('start', start)]
