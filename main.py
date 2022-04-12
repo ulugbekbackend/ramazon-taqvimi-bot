@@ -19,11 +19,11 @@ BTN_TOMORROW='⏳ Ertaga'
 BTN_MONTH="📅 To'liq taqvim"
 BTN_REGION='🇺🇿 Mintaqani o\'zgartirish'
 BTN_DUA='🤲 Duo'
-RESTART1="Muommo yuzaga kelganda ➡️ /start ⬅️ bo\'limini bosing."
+# RESTART1="Muommo yuzaga kelganda ➡️ /start ⬅️ bo\'limini bosing."
 RESTART='/start'
 
 main_buttons=ReplyKeyboardMarkup([
-    [RESTART],[BTN_TODAY],[BTN_TOMORROW,BTN_MONTH],[BTN_REGION],[BTN_DUA],[RESTART1],[RESTART]
+    [RESTART],[BTN_TODAY],[BTN_TOMORROW,BTN_MONTH],[BTN_REGION],[BTN_DUA]
 ], resize_keyboard=True)
 
 STATE_REGION=1
